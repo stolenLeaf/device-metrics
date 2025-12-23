@@ -1,0 +1,64 @@
+services:
+  db:
+    container_name: postgresql_db
+    image: postgres:15.1
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - deptio-network
+
+  pgadmin:
+    depends_on:
+      - db
+    container_name: pgadmin
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    entrypoint: /bin/sh -c "chmod 600 /pgpass; /entrypoint.sh;"
+    user: root
+    configs:
+      - source: servers.json
+        target: /pgadmin4/servers.json
+      - source: pgpass
+        target: /pgpass
+    networks:
+      - deptio-network
+
+volumes:
+  postgres-db:
+  pgadmin-data:
+
+networks:
+  deptio-network:
+
+configs:
+  pgpass:
+    content: |
+      postgresql_db:${DB_PORT}:*:${DB_USERNAME}:${DB_PASSWORD}
+  servers.json:
+    content: |
+      {
+        "Servers": {
+          "1": {
+            "Name": "dev",
+            "Group": "Servers",
+            "Host": "db",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "postgres",
+            "PassFile": "/pgpass",
+            "sslmode": "prefer"
+          }
+        }
+      

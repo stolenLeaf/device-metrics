@@ -1,0 +1,42 @@
+
+# =====================
+# Go
+# =====================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace
+/go.work
+/go.work.sum
+
+# Go modules
+/vendor/
+
+# =====================
+# Environment
+# =====================
+.env
+.env.*
+
+# =====================
+# Docker volumes (local)
+# =====================
+postgres-db/
+pgadmin-data/
+
+# =====================
+# Logs & temp
+# =====================
+*.log
+tmp/
+
+# =====================
+# OS
+# =====================
+.DS_Store
+Thumbs.db
