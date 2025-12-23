@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	database "github.com/stolenleaf/device-metrics/internal/dataBase"
+	database "github.com/stolenleaf/device-metrics/internal/database"
 	"github.com/stolenleaf/device-metrics/internal/routes"
 )
 
