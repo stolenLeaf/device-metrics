@@ -39,3 +39,22 @@ func NewConnection() {
 
 	log.Println("DB CONNECTED")
 }
+
+func Close() {
+	if DB == nil {
+		return
+	}
+
+	slqDB, err := DB.DB()
+	if err != nil {
+		log.Printf("failed to get the sql.DB: %v", err)
+		return
+	}
+
+	if err := slqDB.Close(); err != nil {
+		log.Printf("error closing the database: %v", err)
+	} else {
+		log.Println("database connection clsoed")
+	}
+
+}
