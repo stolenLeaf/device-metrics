@@ -18,8 +18,6 @@ func SetupServer() *gin.Engine {
 	api := server.Group("/api")
 	user.RegisterRoutes(api)
 
-	// routes.RegisterRoutes(server)
-
 	return server
 }
 
