@@ -1,14 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	database "github.com/stolenleaf/device-metrics/internal/database"
-	"github.com/stolenleaf/device-metrics/internal/routes"
+	"github.com/stolenleaf/device-metrics/internal/bootstrap"
 )
 
 func main() {
-	database.NewConnection()
-	server := gin.Default()
-	routes.RegisterRoutes(server)
+
+	server := bootstrap.SetupServer()
 	server.Run(":3001")
 }
