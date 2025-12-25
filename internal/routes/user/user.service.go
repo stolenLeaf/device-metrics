@@ -1,17 +1,17 @@
 package user
 
-type UserService struct {
+type userService struct {
 	Repo *UserRepo
 }
 
-func NewUserService(repo *UserRepo) *UserService {
-	return &UserService{Repo: repo}
+func NewUserService(repo *UserRepo) *userService {
+	return &userService{Repo: repo}
 }
 
-func (s *UserService) GetUsers() ([]User, error) {
+func (s *userService) GetUsers() ([]User, error) {
 	return s.Repo.GetAll()
 }
 
-func (s *UserService) CreateUser(u *User) error {
+func (s *userService) CreateUser(u *User) error {
 	return s.Repo.Create(u)
 }

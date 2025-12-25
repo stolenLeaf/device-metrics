@@ -6,15 +6,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type USerController struct {
-	Service *UserService
+type userController struct {
+	Service *userService
 }
 
-func NewUserController(service *UserService) *USerController {
-	return &USerController{Service: service}
+func NewUserController(service *userService) *userController {
+	return &userController{Service: service}
 }
 
-func (c *USerController) GetUsers(ctx *gin.Context) {
+func (c *userController) GetUsers(ctx *gin.Context) {
 	users, err := c.Service.GetUsers()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -25,7 +25,7 @@ func (c *USerController) GetUsers(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, users)
 }
 
-func (c *USerController) CreateUser(ctx *gin.Context) {
+func (c *userController) CreateUser(ctx *gin.Context) {
 	var user User
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
