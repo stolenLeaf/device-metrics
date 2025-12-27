@@ -1,15 +1,17 @@
 package bootstrap
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/stolenleaf/device-metrics/internal/database"
 	"github.com/stolenleaf/device-metrics/internal/routes/user"
-	"log"
+	"github.com/stolenleaf/device-metrics/internal/routes/usertenants"
 )
 
 func SetupServer() *gin.Engine {
 	database.NewConnection()
-	database.DB.AutoMigrate(&user.User{})
+	database.DB.AutoMigrate(&user.User{}, &usertenants.UserTenants{})
 
 	server := gin.Default()
 
@@ -17,6 +19,7 @@ func SetupServer() *gin.Engine {
 
 	api := server.Group("/api")
 	user.RegisterRoutes(api)
+	usertenants.RegisterRoutes(api)
 
 	return server
 }
